@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   }
 
   const { password, data, images } = req.body;
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ved123!';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'ved123';
 
   if (!password || password !== ADMIN_PASSWORD) {
     return res.status(401).json({ success: false, error: 'Неверный пароль администратора' });

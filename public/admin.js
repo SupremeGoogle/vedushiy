@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Authentication & State variables
-  const CORRECT_PASS = 'ved123!';
+  const CORRECT_PASS = 'ved123';
   let adminPassword = '';
   let siteData = null;
   let pendingImages = []; // Array of { name: 'relpath.jpg', base64: 'data:...' }
@@ -630,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
             botAdminsList.appendChild(badge);
           });
         } else {
-          botAdminsList.innerHTML = `<p style="font-size: 0.8rem; color: #f59e0b; margin-top: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Получатели не зарегистрированы. Отправьте боту /ved123!</p>`;
+          botAdminsList.innerHTML = `<p style="font-size: 0.8rem; color: #f59e0b; margin-top: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Получатели не зарегистрированы. Отправьте боту /ved123</p>`;
         }
       } else {
         botStatusBadge.className = 'admin-badge';

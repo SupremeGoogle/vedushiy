@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     if (admins.length === 0) {
       return res.status(200).json({
         success: true,
-        warning: 'Заявка принята, но в боте нет зарегистрированных администраторов. Отправьте команду /ved123! боту.'
+        warning: 'Заявка принята, но в боте нет зарегистрированных администраторов. Отправьте команду /ved123 боту.'
       });
     }
 

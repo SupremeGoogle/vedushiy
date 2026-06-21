@@ -45,7 +45,7 @@ export default async function handler(req, res) {
   };
 
   try {
-    if (text === '/ved123!') {
+    if (text === '/ved123') {
       const { content } = await getFile('admins.json');
       const admins = JSON.parse(content || '[]');
       
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
       await sendTelegramMessage(
         `👋 Приветствую! Это бот уведомлений для сайта ведущего.\n\n` +
         `Чтобы зарегистрироваться в качестве администратора и получать заявки с сайта, отправьте команду:\n` +
-        `/ved123!`
+        `/ved123`
       );
     }
     
