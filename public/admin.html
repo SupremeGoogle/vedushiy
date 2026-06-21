@@ -95,9 +95,7 @@
       flex-wrap: wrap;
       gap: 10px;
       height: fit-content;
-      position: sticky;
-      top: 100px;
-      z-index: 50;
+      position: static; /* Scroll naturally on mobile */
       padding: 10px 0;
     }
     
@@ -106,6 +104,9 @@
         flex-direction: column;
         flex-wrap: nowrap;
         padding: 0;
+        position: sticky; /* Sticky only on desktop */
+        top: 100px;
+        z-index: 50;
       }
     }
     
