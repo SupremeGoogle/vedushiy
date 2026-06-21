@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Input elements: General & Contacts
   const inpTitle = document.getElementById('inp-title');
+  const inpLogoText = document.getElementById('inp-logotext');
   const inpDescription = document.getElementById('inp-description');
   const inpPhone = document.getElementById('inp-phone');
   const inpYandexDisk = document.getElementById('inp-yandexdisk');
@@ -169,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // General
     inpTitle.value = siteData.title || '';
+    inpLogoText.value = siteData.logoText || '';
     inpDescription.value = siteData.metaDescription || '';
     inpPhone.value = siteData.phone || '';
     inpYandexDisk.value = siteData.yandexDisk || '';
@@ -244,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // General
     siteData.title = inpTitle.value.trim();
+    siteData.logoText = inpLogoText.value.trim();
     siteData.metaDescription = inpDescription.value.trim();
     siteData.phone = inpPhone.value.trim();
     siteData.yandexDisk = inpYandexDisk.value.trim();

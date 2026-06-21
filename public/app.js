@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentLightboxIndex = 0;
 
   // Cache DOM elements
+  const logoText = document.querySelector('.logo-text');
   const heroTitle = document.querySelector('.hero-title');
   const heroSubtitle = document.querySelector('.hero-subtitle');
   const heroBtn = document.querySelector('.hero-cta .btn-primary');
@@ -68,6 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderSiteContent() {
     if (!siteData) return;
+
+    // Logo Text
+    if (logoText && siteData.logoText) {
+      logoText.textContent = siteData.logoText;
+    }
 
     // Document SEO
     document.title = siteData.title || 'Алексей Соколов';
