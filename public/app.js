@@ -277,12 +277,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Sticky header on scroll
+  // Parallax background and geometric elements cache
+  const orb1 = document.querySelector('.orb-1');
+  const orb2 = document.querySelector('.orb-2');
+  const path1 = document.querySelector('.path-1');
+  const path2 = document.querySelector('.path-2');
+  const shape1 = document.querySelector('.shape-1');
+  const shape2 = document.querySelector('.shape-2');
+
+  // Sticky header on scroll & Parallax animations
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+    const scrolled = window.scrollY;
+    
+    if (scrolled > 50) {
       mainHeader.classList.add('scrolled');
     } else {
       mainHeader.classList.remove('scrolled');
     }
+    
+    // Move background glow orbs in parallax
+    if (orb1) orb1.style.transform = `translateY(${scrolled * 0.12}px)`;
+    if (orb2) orb2.style.transform = `translateY(${scrolled * -0.08}px)`;
+    
+    // Translate background SVG vector lines
+    if (path1) path1.style.transform = `translateY(${scrolled * 0.05}px)`;
+    if (path2) path2.style.transform = `translateY(${scrolled * -0.03}px)`;
+    
+    // Zoom and shift hero image slightly
+    if (heroImg && scrolled < window.innerHeight) {
+      heroImg.style.transform = `scale(${1 + scrolled * 0.00008}) translateY(${scrolled * 0.03}px)`;
+    }
+    
+    // Rotate abstract geometric visual helpers
+    if (shape1) shape1.style.transform = `rotate(${scrolled * 0.12}deg) translateY(${scrolled * 0.06}px)`;
+    if (shape2) shape2.style.transform = `translateY(${scrolled * -0.08}px) rotate(${scrolled * -0.04}deg)`;
   });
 
   // Scroll reveal triggers
