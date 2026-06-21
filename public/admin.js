@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hero
     if (siteData.hero) {
-      inpHeroTitle.value = siteData.hero.title || '';
+      inpHeroTitle.value = (siteData.hero.title || '').replace(/<[^>]+>/g, '');
       inpHeroSubtitle.value = siteData.hero.subtitle || '';
       inpHeroBtnText.value = siteData.hero.buttonText || '';
       if (siteData.hero.image) prevHeroImage.setAttribute('src', '/' + siteData.hero.image);

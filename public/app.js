@@ -91,7 +91,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hero Section
     if (siteData.hero) {
-      if (heroTitle) heroTitle.innerHTML = siteData.hero.title;
+      if (heroTitle && siteData.hero.title) {
+        let cleanText = siteData.hero.title.replace(/<[^>]+>/g, '');
+        const sentences = cleanText.split('.').map(s => s.trim()).filter(Boolean);
+        if (sentences.length >= 2) {
+          const mainPart = sentences.slice(0, -1).join('. ') + '.';
+          const lastPart = sentences[sentences.length - 1];
+          const words = lastPart.split(' ').map(w => w.trim()).filter(Boolean);
+          if (words.length > 0) {
+            words[0] = `<span>${words[0]}</span>`;
+          }
+          heroTitle.innerHTML = `${mainPart}<br>${words.join(' ')}`;
+        } else {
+          const words = cleanText.split(' ').map(w => w.trim()).filter(Boolean);
+          if (words.length > 0) {
+            words[0] = `<span>${words[0]}</span>`;
+          }
+          heroTitle.innerHTML = words.join(' ');
+        }
+      }
       if (heroSubtitle) heroSubtitle.textContent = siteData.hero.subtitle;
       if (heroBtn && siteData.hero.buttonText) {
         heroBtn.innerHTML = `${siteData.hero.buttonText} <i class="fa-solid fa-arrow-right"></i>`;
