@@ -1293,3 +1293,86 @@ span {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ==========================================================================
+   FLOATING MUSIC CONTROLLER
+   ========================================================================== */
+.music-toggle-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Adjust button position slightly on small screens so it doesn't overlap other buttons */
+@media (max-width: 576px) {
+  .music-toggle-container {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+.music-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-bg-card);
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-glass);
+  transition: var(--transition-smooth);
+  outline: none;
+}
+
+.music-toggle-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--color-primary-glow);
+}
+
+/* Audio waves animation */
+.music-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+  width: 18px;
+}
+
+.music-waves span {
+  display: block;
+  width: 2.5px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+  transition: var(--transition-fast);
+  height: 14px;
+}
+
+.music-waves.playing span {
+  animation: waveBounce 0.8s ease-in-out infinite alternate;
+}
+
+.music-waves.playing span:nth-child(1) { animation-delay: -0.2s; height: 10px; }
+.music-waves.playing span:nth-child(2) { animation-delay: -0.6s; height: 18px; }
+.music-waves.playing span:nth-child(3) { animation-delay: -0.4s; height: 13px; }
+
+.music-waves.paused span {
+  height: 4px !important;
+  animation: none !important;
+}
+
+@keyframes waveBounce {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Алексей Соколов — Ведущий Твоих Лучших Событий</title>
   <meta name="description" content="Современный ведущий для мероприятий любого масштаба. Стильные свадьбы, выпускные и статусные корпоративные события.">
-  <link rel="icon" type="image/png" href="images/host/2026-06-21 17.17.31.jpg">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -305,6 +305,19 @@
       </div>
     </div>
   </div>
+
+  <!-- Floating Music Toggle -->
+  <div class="music-toggle-container">
+    <button class="music-toggle-btn" id="btn-music-toggle" aria-label="Toggle music">
+      <div class="music-waves paused" id="music-waves-el">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </button>
+  </div>
+
+  <audio id="bg-music" loop src="audio/ambient.mp3"></audio>
 
   <!-- Main JavaScript File -->
   <script src="app.js"></script>

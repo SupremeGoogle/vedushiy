@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="46" fill="#090a0f" stroke="#c5a059" stroke-width="4"/>
+  <!-- Microphone body -->
+  <rect x="42" y="24" width="16" height="32" rx="8" fill="#c5a059" />
+  <!-- Microphone grill details -->
+  <line x1="42" y1="32" x2="58" y2="32" stroke="#090a0f" stroke-width="1.5"/>
+  <line x1="42" y1="40" x2="58" y2="40" stroke="#090a0f" stroke-width="1.5"/>
+  <line x1="42" y1="48" x2="58" y2="48" stroke="#090a0f" stroke-width="1.5"/>
+  <line x1="50" y1="24" x2="50" y2="56" stroke="#090a0f" stroke-width="1" opacity="0.3"/>
+  <!-- Stand -->
+  <path d="M34 40 C34 52 40 64 50 64 C60 64 66 52 66 40" fill="none" stroke="#c5a059" stroke-width="4" stroke-linecap="round"/>
+  <line x1="50" y1="64" x2="50" y2="78" stroke="#c5a059" stroke-width="5"/>
+  <path d="M36 78 L64 78" stroke="#c5a059" stroke-width="5" stroke-linecap="round"/>
+  <!-- Sparkles -->
+  <path d="M22 25 L26 29 M26 25 L22 29" stroke="#c5a059" stroke-width="2" stroke-linecap="round"/>
+  <path d="M74 25 L78 29 M78 25 L74 29" stroke="#c5a059" stroke-width="2" stroke-linecap="round"/>
+</svg>

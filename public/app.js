@@ -356,6 +356,93 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ==========================================================================
+     6. BACKGROUND MUSIC PLAYER (FADE-IN & AUTOPLAY)
+     ========================================================================== */
+  const bgMusic = document.getElementById('bg-music');
+  const btnMusicToggle = document.getElementById('btn-music-toggle');
+  const musicWavesEl = document.getElementById('music-waves-el');
+
+  let musicPlaying = false;
+  let autoplayInitiated = false;
+
+  function toggleMusic() {
+    if (!bgMusic) return;
+    
+    if (musicPlaying) {
+      bgMusic.pause();
+      if (musicWavesEl) {
+        musicWavesEl.classList.add('paused');
+        musicWavesEl.classList.remove('playing');
+      }
+      musicPlaying = false;
+    } else {
+      bgMusic.play().then(() => {
+        if (musicWavesEl) {
+          musicWavesEl.classList.add('playing');
+          musicWavesEl.classList.remove('paused');
+        }
+        musicPlaying = true;
+      }).catch(err => {
+        console.warn('Audio play error:', err.message);
+      });
+    }
+  }
+
+  // Smooth fade-in to prevent sudden loud sounds
+  function startAutoplayWithFade() {
+    if (autoplayInitiated || !bgMusic) return;
+    autoplayInitiated = true;
+    
+    bgMusic.volume = 0;
+    bgMusic.play().then(() => {
+      if (musicWavesEl) {
+        musicWavesEl.classList.add('playing');
+        musicWavesEl.classList.remove('paused');
+      }
+      musicPlaying = true;
+      
+      let vol = 0;
+      const targetVol = 0.12; // Pleasant background volume
+      const fadeDuration = 3000; // 3 seconds fade
+      const step = 0.01;
+      const interval = fadeDuration / (targetVol / step);
+      
+      const fadeInterval = setInterval(() => {
+        vol += step;
+        if (vol >= targetVol) {
+          bgMusic.volume = targetVol;
+          clearInterval(fadeInterval);
+        } else {
+          bgMusic.volume = vol;
+        }
+      }, interval);
+      
+      removeAutoplayTriggers();
+    }).catch(() => {
+      // Autoplay blocked by browser policy, wait for manual toggle click
+      console.log('Autoplay blocked. Waiting for manual play click.');
+    });
+  }
+
+  function removeAutoplayTriggers() {
+    ['click', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
+      document.removeEventListener(evt, startAutoplayWithFade);
+    });
+  }
+
+  if (btnMusicToggle) {
+    btnMusicToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMusic();
+    });
+  }
+
+  // Register document-wide triggers for first user interaction
+  ['click', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, startAutoplayWithFade, { passive: true });
+  });
+
   // Run initialization
   init();
 });
