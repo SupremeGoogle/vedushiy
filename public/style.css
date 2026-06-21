@@ -1451,18 +1451,31 @@ span {
     padding: 60px 0;
   }
 
+  .about-grid {
+    display: grid;
+    grid-template-columns: 135px 1fr;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
   .about-image-stack {
-    max-width: 280px;
+    max-width: 120px;
+    margin: 0;
   }
 
   .about-badge {
-    bottom: -15px;
-    right: 10px;
-    padding: 12px 18px;
+    bottom: -10px;
+    right: -10px;
+    padding: 8px 12px;
   }
 
   .badge-num {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
+  }
+
+  .badge-text {
+    font-size: 0.55rem;
+    margin-top: 2px;
   }
 
   .section-header {
@@ -1473,13 +1486,15 @@ span {
     font-size: 2.2rem;
   }
 
-  .about-grid,
   .contact-grid {
     gap: 40px;
   }
 
   .about-stats {
-    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
   }
 
   .services-grid {
@@ -1524,23 +1539,33 @@ span {
   }
 
   .about-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
   }
 
   .stat-card {
     min-width: 0;
-    padding: 12px 8px;
+    padding: 8px 12px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .stat-num {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-text-main) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
   }
 
   .stat-lbl {
     font-size: 0.72rem;
+    display: inline-block;
+    line-height: 1.2;
   }
 
   .portfolio-grid {
