@@ -36,7 +36,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           chat_id: chatId,
           text: msgText,
-          parse_mode: 'Markdown'
+          parse_mode: 'HTML'
         })
       });
     } catch (e) {
@@ -45,7 +45,10 @@ export default async function handler(req, res) {
   };
 
   try {
-    if (text === '/ved123') {
+    const isRegisterCmd = text === '/ved123' || text.startsWith('/ved123@');
+    const isStartCmd = text === '/start' || text.startsWith('/start@');
+
+    if (isRegisterCmd) {
       const { content } = await getFile('admins.json');
       const admins = JSON.parse(content || '[]');
       
@@ -63,18 +66,18 @@ export default async function handler(req, res) {
         await saveFile('admins.json', JSON.stringify(admins, null, 2), `Register admin @${username} via bot`);
         
         await sendTelegramMessage(
-          `🎉 *Вы успешно зарегистрированы в качестве администратора!*\n` +
+          `🎉 <b>Вы успешно зарегистрированы в качестве администратора!</b>\n` +
           `Теперь вы будете получать уведомления о новых заявках с вашего персонального сайта.`
         );
         console.log(`Зарегистрирован новый администратор: @${username} (ID: ${chatId})`);
       } else {
         await sendTelegramMessage(`ℹ️ Вы уже зарегистрированы как администратор уведомлений.`);
       }
-    } else if (text === '/start') {
+    } else if (isStartCmd) {
       await sendTelegramMessage(
         `👋 Приветствую! Это бот уведомлений для сайта ведущего.\n\n` +
         `Чтобы зарегистрироваться в качестве администратора и получать заявки с сайта, отправьте команду:\n` +
-        `/ved123`
+        `<code>/ved123</code>`
       );
     }
     
