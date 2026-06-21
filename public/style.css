@@ -3,9 +3,9 @@
    ========================================================================== */
 :root {
   /* Color Palette (HSL Tailored) */
-  --color-bg: #090a0f;
-  --color-bg-card: rgba(18, 20, 29, 0.55);
-  --color-bg-header: rgba(9, 10, 15, 0.75);
+  --color-bg: #0d0406;
+  --color-bg-card: rgba(28, 9, 12, 0.65);
+  --color-bg-header: rgba(13, 4, 6, 0.75);
   
   --color-text-main: #f3f4f6;
   --color-text-muted: #9ca3af;
@@ -16,9 +16,9 @@
   --color-primary-hover: #b08d47;
   --color-primary-glow: rgba(197, 160, 89, 0.35);
   
-  --color-accent: #8b5cf6;        /* Electric Violet */
-  --color-accent-hover: #7c3aed;
-  --color-accent-glow: rgba(139, 92, 246, 0.25);
+  --color-accent: #e11d48;        /* Crimson Red / Rose */
+  --color-accent-hover: #be123c;
+  --color-accent-glow: rgba(225, 29, 72, 0.25);
   
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-active: rgba(197, 160, 89, 0.5);
@@ -48,11 +48,12 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
+  background-color: #06070a; /* Prevents white flashes during elastic scroll / bounce */
 }
 
 body {
   font-family: var(--font-primary);
-  background: radial-gradient(circle at 50% 0%, #161828 0%, #06070a 100%);
+  background: radial-gradient(circle at 50% 0%, #2f0a0f 0%, #06070a 100%);
   color: var(--color-text-main);
   line-height: 1.6;
   overflow-x: hidden;
@@ -1300,17 +1301,14 @@ span {
 /* Scroll reveal triggers class */
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(60px) scale(0.97);
-  filter: blur(4px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scroll-reveal.revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
-  filter: blur(0);
 }
 
 /* Staggered loading triggers */

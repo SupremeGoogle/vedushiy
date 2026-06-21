@@ -406,6 +406,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       musicPlaying = false;
     } else {
+      // Set volume to audible level in case it was set to 0 due to failed autoplay
+      bgMusic.volume = 0.25;
       bgMusic.play().then(() => {
         if (musicWavesEl) {
           musicWavesEl.classList.add('playing');
@@ -432,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
       musicPlaying = true;
       
       let vol = 0;
-      const targetVol = 0.12; // Pleasant background volume
+      const targetVol = 0.25; // Increase pleasant background volume for better audibility
       const fadeDuration = 3000; // 3 seconds fade
       const step = 0.01;
       const interval = fadeDuration / (targetVol / step);
@@ -449,7 +451,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       removeAutoplayTriggers();
     }).catch(() => {
-      // Autoplay blocked by browser policy, wait for manual toggle click
+      // Reset volume to 0.25 in case browser blocked autoplay, 
+      // so that when the user manually clicks play, they can actually hear it!
+      bgMusic.volume = 0.25;
       console.log('Autoplay blocked. Waiting for manual play click.');
     });
   }
