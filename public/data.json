@@ -42,27 +42,6 @@
   ],
   "gallery": [
     {
-      "id": "gal-1",
-      "image": "images/host/2026-06-21 17.17.46.jpg",
-      "category": "host",
-      "title": "Алексей Соколов",
-      "description": "Фото ведущего"
-    },
-    {
-      "id": "gal-2",
-      "image": "images/host/2026-06-21 17.17.48.jpg",
-      "category": "host",
-      "title": "Стильный образ",
-      "description": "Ведущий на мероприятие"
-    },
-    {
-      "id": "gal-3",
-      "image": "images/host/2026-06-21 17.17.31.jpg",
-      "category": "host",
-      "title": "Эмоции в кадре",
-      "description": "Живая мимика и харизма"
-    },
-    {
       "id": "gal-4",
       "image": "images/weddings/2026-06-21 17.16.19.jpg",
       "category": "weddings",

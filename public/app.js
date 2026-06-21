@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Portfolio Grid
-    renderPortfolio('all');
+    renderPortfolio('weddings');
   }
 
   function renderPortfolio(filterCategory) {
@@ -165,8 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <img src="${item.image}" alt="${item.title}" loading="lazy">
         <div class="portfolio-overlay">
-          <span class="portfolio-item-category">${getCategoryLabel(item.category)}</span>
-          <h4 class="portfolio-item-title">${item.title}</h4>
+          <div class="portfolio-zoom-icon">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </div>
         </div>
       `;
       
