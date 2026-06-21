@@ -498,6 +498,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Scroll Drawing SVG Path Animation
+  function initScrollDrawing() {
+    const scrollPath = document.getElementById('scroll-path');
+    if (!scrollPath) return;
+
+    let pathLength = 1050;
+    try {
+      pathLength = scrollPath.getTotalLength() || 1050;
+    } catch (e) {}
+
+    scrollPath.style.strokeDasharray = pathLength;
+    scrollPath.style.strokeDashoffset = pathLength;
+
+    function updatePathDrawing() {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollHeight <= 0) return;
+      
+      const scrollPercent = window.scrollY / scrollHeight;
+      const percent = Math.min(Math.max(scrollPercent, 0), 1);
+      
+      scrollPath.style.strokeDashoffset = pathLength - (pathLength * percent);
+    }
+
+    updatePathDrawing();
+    window.addEventListener('scroll', updatePathDrawing);
+    window.addEventListener('resize', () => {
+      try {
+        pathLength = scrollPath.getTotalLength() || 1050;
+        scrollPath.style.strokeDasharray = pathLength;
+      } catch (e) {}
+      updatePathDrawing();
+    });
+  }
+
   // Run initialization
   init();
+  initScrollDrawing();
 });

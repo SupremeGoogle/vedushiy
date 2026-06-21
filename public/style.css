@@ -1494,3 +1494,33 @@ span {
   }
 }
 
+/* Wavy scroll indicator */
+.scroll-line-container {
+  position: fixed;
+  right: 25px;
+  top: 15%;
+  height: 70vh;
+  width: 30px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.35;
+  display: none;
+  filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.2));
+}
+
+@media (min-width: 992px) {
+  .scroll-line-container {
+    display: block;
+  }
+}
+
+.scroll-line-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+#scroll-path {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s ease-out;
+}
+
