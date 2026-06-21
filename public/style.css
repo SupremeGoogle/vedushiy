@@ -1406,6 +1406,10 @@ span {
   }
 
   .hero-section {
+    background-image: linear-gradient(90deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.5) 60%, rgba(10, 10, 10, 0.1) 100%), url('images/host/mobile_hero_bg.png');
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
     padding-top: 130px;
     padding-bottom: 60px;
     min-height: 80vh;
@@ -1413,11 +1417,8 @@ span {
 
   .hero-container {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    display: block;
+    text-align: left;
   }
 
   .hero-content {
@@ -1425,36 +1426,22 @@ span {
     z-index: 2;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    max-width: 80%;
   }
 
   .hero-subtitle {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .hero-cta {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .hero-visual {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    opacity: 0.18;
-    z-index: 1;
-    pointer-events: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .image-box {
-    max-width: 280px;
+    display: none !important;
   }
 
   .about-section,
