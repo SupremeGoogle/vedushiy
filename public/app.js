@@ -140,6 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Portfolio Grid
     renderPortfolio('weddings');
+
+    // Background Music init
+    initMusic();
   }
 
   function renderPortfolio(filterCategory) {
@@ -164,11 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
       card.setAttribute('data-index', index);
       card.innerHTML = `
         <img src="${item.image}" alt="${item.title}" loading="lazy">
-        <div class="portfolio-overlay">
-          <div class="portfolio-zoom-icon">
-            <i class="fa-solid fa-magnifying-glass-plus"></i>
-          </div>
-        </div>
       `;
       
       // Open Lightbox on Click
@@ -391,9 +389,46 @@ document.addEventListener('DOMContentLoaded', () => {
   const bgMusic = document.getElementById('bg-music');
   const btnMusicToggle = document.getElementById('btn-music-toggle');
   const musicWavesEl = document.getElementById('music-waves-el');
+  const musicToggleContainer = document.querySelector('.music-toggle-container');
 
   let musicPlaying = false;
   let autoplayInitiated = false;
+  let musicInitialized = false;
+
+  function initMusic() {
+    if (!bgMusic) return;
+
+    // Check if music is enabled in data.json configuration
+    if (siteData && siteData.musicEnabled === false) {
+      if (musicToggleContainer) musicToggleContainer.style.display = 'none';
+      bgMusic.pause();
+      removeAutoplayTriggers();
+      return;
+    }
+
+    // Music is enabled: display UI toggle
+    if (musicToggleContainer) musicToggleContainer.style.display = 'flex';
+    
+    // Set custom music source URL if configured
+    if (siteData && siteData.musicUrl) {
+      bgMusic.src = siteData.musicUrl;
+    }
+
+    if (musicInitialized) return; // Prevent duplicate listeners
+    musicInitialized = true;
+
+    if (btnMusicToggle) {
+      btnMusicToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMusic();
+      });
+    }
+
+    // Register document-wide triggers for first user interaction to start play
+    ['click', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
+      document.addEventListener(evt, startAutoplayWithFade, { passive: true });
+    });
+  }
 
   function toggleMusic() {
     if (!bgMusic) return;
@@ -406,7 +441,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       musicPlaying = false;
     } else {
-      // Set volume to audible level in case it was set to 0 due to failed autoplay
       bgMusic.volume = 0.25;
       bgMusic.play().then(() => {
         if (musicWavesEl) {
@@ -463,18 +497,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.removeEventListener(evt, startAutoplayWithFade);
     });
   }
-
-  if (btnMusicToggle) {
-    btnMusicToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleMusic();
-    });
-  }
-
-  // Register document-wide triggers for first user interaction
-  ['click', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
-    document.addEventListener(evt, startAutoplayWithFade, { passive: true });
-  });
 
   // Run initialization
   init();

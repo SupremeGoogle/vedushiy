@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const inpYandexDisk = document.getElementById('inp-yandexdisk');
   const inpTelegram = document.getElementById('inp-telegram');
   const inpInstagram = document.getElementById('inp-instagram');
+  const inpMusicEnabled = document.getElementById('inp-music-enabled');
+  const inpMusicUrl = document.getElementById('inp-music-url');
+  const fileMusicSource = document.getElementById('file-music-source');
 
   // Input elements: Hero
   const inpHeroTitle = document.getElementById('inp-hero-title');
@@ -172,6 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
     inpTelegram.value = siteData.telegram || '';
     inpInstagram.value = siteData.instagram || '';
 
+    // Music settings
+    if (inpMusicEnabled) inpMusicEnabled.checked = siteData.musicEnabled !== false;
+    if (inpMusicUrl) inpMusicUrl.value = siteData.musicUrl || 'audio/ambient.mp3';
+
     // Hero
     if (siteData.hero) {
       inpHeroTitle.value = siteData.hero.title || '';
@@ -242,6 +249,10 @@ document.addEventListener('DOMContentLoaded', () => {
     siteData.yandexDisk = inpYandexDisk.value.trim();
     siteData.telegram = inpTelegram.value.trim();
     siteData.instagram = inpInstagram.value.trim();
+
+    // Music settings
+    if (inpMusicEnabled) siteData.musicEnabled = inpMusicEnabled.checked;
+    if (inpMusicUrl) siteData.musicUrl = inpMusicUrl.value.trim();
 
     // Hero
     if (!siteData.hero) siteData.hero = {};
@@ -495,6 +506,50 @@ document.addEventListener('DOMContentLoaded', () => {
       setUnsavedChanges(true);
     });
   });
+
+  // Listening to background music selection
+  if (fileMusicSource) {
+    fileMusicSource.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('audio/') && !file.name.endsWith('.mp3')) {
+        alert('Файл должен быть аудиофайлом в формате MP3!');
+        return;
+      }
+
+      if (file.size > 6 * 1024 * 1024) {
+        alert('Внимание: Аудиофайл довольно большой (' + (file.size / 1024 / 1024).toFixed(1) + ' МБ). Для более быстрой загрузки сайта рекомендуется использовать сжатые MP3 файлы до 5 МБ.');
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const base64 = evt.target.result;
+        const cleanName = file.name.replace(/\s+/g, '_');
+        const audioPath = `public/audio/${Date.now()}_${cleanName}`;
+        
+        pendingImages.push({
+          name: audioPath,
+          base64: base64
+        });
+
+        const displayPath = audioPath.replace('public/', '');
+        siteData.musicUrl = displayPath;
+        if (inpMusicUrl) inpMusicUrl.value = displayPath;
+        
+        setUnsavedChanges(true);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Listening to music toggle check
+  if (inpMusicEnabled) {
+    inpMusicEnabled.addEventListener('change', () => {
+      setUnsavedChanges(true);
+      updateSiteDataState();
+    });
+  }
 
   /* ==========================================================================
      7. BROADCAST AND COMMIT (SAVE HANDLER)

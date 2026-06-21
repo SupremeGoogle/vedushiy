@@ -28,13 +28,13 @@ export default async function handler(req, res) {
   try {
     // 1. Сначала загружаем переданные изображения (base64)
     if (images && Array.isArray(images) && images.length > 0) {
-      console.log(`Загрузка ${images.length} изображений...`);
+      console.log(`Загрузка ${images.length} файлов...`);
       for (const img of images) {
         if (img.name && img.base64) {
-          // Сохраняем в папку public/images/
-          // Если имя уже содержит вложенную папку (например, "host/myphoto.jpg"), saveBinaryFile создаст ее
-          const filePath = `public/images/${img.name}`;
-          await saveBinaryFile(filePath, img.base64, `Upload image ${img.name} via Admin Panel`);
+          // Если имя уже начинается с public/, сохраняем напрямую по этому пути.
+          // Иначе сохраняем в папку public/images/
+          const filePath = img.name.startsWith('public/') ? img.name : `public/images/${img.name}`;
+          await saveBinaryFile(filePath, img.base64, `Upload file ${img.name} via Admin Panel`);
         }
       }
     }

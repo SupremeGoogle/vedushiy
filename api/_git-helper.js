@@ -106,8 +106,8 @@ export async function saveFile(filePath, content, commitMessage = 'Update file v
 
 // Специальная функция для коммита бинарных данных (изображений)
 export async function saveBinaryFile(filePath, base64Data, commitMessage = 'Upload image via Admin Panel') {
-  // Очищаем префикс base64 (например, "data:image/jpeg;base64,")
-  const cleanBase64 = base64Data.replace(/^data:image\/\w+;base64,/, '');
+  // Очищаем префикс base64 (например, "data:image/jpeg;base64," или "data:audio/mpeg;base64,")
+  const cleanBase64 = base64Data.replace(/^data:[^;]+;base64,/, '');
   
   if (!isVercel) {
     // Локальное сохранение

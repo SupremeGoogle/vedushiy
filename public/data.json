@@ -5,6 +5,8 @@
   "telegram": "https://t.me/alex_sokolov_show",
   "instagram": "https://instagram.com/alex_sokolov_event",
   "yandexDisk": "https://disk.yandex.ru/d/FDC2oV4wkKiiMw",
+  "musicEnabled": true,
+  "musicUrl": "audio/ambient.mp3",
   "hero": {
     "title": "Энергия. Стиль.<br><span>Эмоции</span> ваших событий",
     "subtitle": "Превращаю свадьбы, выпускные и коммерческие проекты в легендарные шоу. Создаю душевную атмосферу, объединяю поколения и веду с драйвом.",
@@ -70,6 +72,83 @@
       "description": "Празднование дня рождения"
     },
     {
+      "id": "gal-w1",
+      "image": "images/weddings/2026-06-21 17.16.25.jpg",
+      "category": "weddings",
+      "title": "Выступление артистов",
+      "description": "Шоу-программа на свадьбе"
+    },
+    {
+      "id": "gal-w2",
+      "image": "images/weddings/2026-06-21 17.16.35.jpg",
+      "category": "weddings",
+      "title": "Семейный интерактив",
+      "description": "Теплые моменты праздника"
+    },
+    {
+      "id": "gal-w3",
+      "image": "images/weddings/2026-06-21 17.16.38.jpg",
+      "category": "weddings",
+      "title": "Поздравления близких",
+      "description": "Искренние пожелания"
+    },
+    {
+      "id": "gal-w4",
+      "image": "images/weddings/2026-06-21 17.16.40.jpg",
+      "category": "weddings",
+      "title": "Эмоции гостей",
+      "description": "Радостный смех и улыбки"
+    },
+    {
+      "id": "gal-w5",
+      "image": "images/weddings/2026-06-21 17.16.43.jpg",
+      "category": "weddings",
+      "title": "Танцевальные конкурсы",
+      "description": "Зажигательное веселье"
+    },
+    {
+      "id": "gal-w6",
+      "image": "images/weddings/2026-06-21 17.16.49.jpg",
+      "category": "weddings",
+      "title": "Диджей-сет",
+      "description": "Мощная дискотека в финале"
+    },
+    {
+      "id": "gal-w7",
+      "image": "images/weddings/2026-06-21 17.16.52.jpg",
+      "category": "weddings",
+      "title": "Красивые тосты",
+      "description": "Слова любви от родителей"
+    },
+    {
+      "id": "gal-w8",
+      "image": "images/weddings/2026-06-21 17.16.54.jpg",
+      "category": "weddings",
+      "title": "Конкурсная программа",
+      "description": "Веселые интерактивные игры"
+    },
+    {
+      "id": "gal-w9",
+      "image": "images/weddings/2026-06-21 17.18.39.jpg",
+      "category": "weddings",
+      "title": "Романтичный момент",
+      "description": "Нежность и теплота праздника"
+    },
+    {
+      "id": "gal-w10",
+      "image": "images/weddings/2026-06-21 17.18.44.jpg",
+      "category": "weddings",
+      "title": "Свадебное шоу",
+      "description": "Увлекательная программа вечера"
+    },
+    {
+      "id": "gal-w11",
+      "image": "images/weddings/2026-06-21 17.18.49.jpg",
+      "category": "weddings",
+      "title": "Танцы молодоженов",
+      "description": "Красивый финал торжества"
+    },
+    {
       "id": "gal-8",
       "image": "images/graduations/2026-06-21 17.15.37.jpg",
       "category": "graduations",
@@ -89,6 +168,20 @@
       "category": "graduations",
       "title": "Вручение аттестатов",
       "description": "Торжественный момент"
+    },
+    {
+      "id": "gal-g1",
+      "image": "images/graduations/2026-06-21 17.15.46.jpg",
+      "category": "graduations",
+      "title": "Эмоции выпускников",
+      "description": "В добрый путь!"
+    },
+    {
+      "id": "gal-g2",
+      "image": "images/graduations/Снимок экрана — 2026-06-21 в 12.00.17.png",
+      "category": "graduations",
+      "title": "Драйв на сцене",
+      "description": "Мощная музыкальная программа"
     },
     {
       "id": "gal-11",
