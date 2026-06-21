@@ -1,0 +1,15 @@
+{
+  "name": "vedushiy-website",
+  "version": "1.0.0",
+  "description": "Event Host single-page website with Admin Panel and Telegram notifications",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "dotenv": "^16.4.5"
+  }
+}

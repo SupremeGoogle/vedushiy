@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Алексей Соколов — Ведущий Твоих Лучших Событий</title>
+  <meta name="description" content="Современный ведущий для мероприятий любого масштаба. Стильные свадьбы, выпускные и статусные корпоративные события.">
+  <link rel="icon" type="image/png" href="images/host/2026-06-21 17.17.31.jpg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for Social Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Dynamic SVG Animated Background Grid -->
+  <div class="bg-canvas-container">
+    <svg class="bg-svg-grid" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <defs>
+        <radialGradient id="glow-grad-1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="var(--color-primary-glow)" stop-opacity="0.15" />
+          <stop offset="100%" stop-color="var(--color-bg)" stop-opacity="0" />
+        </radialGradient>
+        <radialGradient id="glow-grad-2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="var(--color-accent-glow)" stop-opacity="0.12" />
+          <stop offset="100%" stop-color="var(--color-bg)" stop-opacity="0" />
+        </radialGradient>
+        <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.3" />
+          <stop offset="50%" stop-color="var(--color-primary)" stop-opacity="0.1" />
+          <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <!-- Background glow spots -->
+      <circle class="glow-orb orb-1" cx="20%" cy="30%" r="400" fill="url(#glow-grad-1)" />
+      <circle class="glow-orb orb-2" cx="80%" cy="70%" r="500" fill="url(#glow-grad-2)" />
+      
+      <!-- Abstract Animated Lines -->
+      <path class="animated-path path-1" d="M -100 200 C 300 400, 600 100, 1000 300 C 1300 500, 1500 200, 2000 400" fill="none" stroke="url(#line-grad)" stroke-width="2" />
+      <path class="animated-path path-2" d="M -50 800 C 400 600, 800 900, 1200 700 C 1500 600, 1700 850, 2100 750" fill="none" stroke="url(#line-grad)" stroke-width="1.5" />
+    </svg>
+  </div>
+
+  <!-- Header -->
+  <header id="main-header" class="glass">
+    <div class="header-container">
+      <a href="#" class="logo">
+        <svg class="logo-svg" viewBox="0 0 50 50" width="36" height="36">
+          <circle cx="25" cy="25" r="22" fill="none" stroke="url(#logo-grad)" stroke-width="2.5" />
+          <path d="M 16 16 L 34 34 M 34 16 L 16 34" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" />
+          <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--color-primary)" />
+            <stop offset="100%" stop-color="var(--color-accent)" />
+          </linearGradient>
+        </svg>
+        <span class="logo-text">A.SOKOLOV</span>
+      </a>
+      
+      <nav class="nav-menu">
+        <a href="#about" class="nav-link">О себе</a>
+        <a href="#services" class="nav-link">Форматы</a>
+        <a href="#portfolio" class="nav-link">Портфолио</a>
+        <a href="#contact" class="nav-link">Контакты</a>
+      </nav>
+      
+      <div class="header-right">
+        <a href="tel:+79123456789" class="phone-link btn-phone"><i class="fa-solid fa-phone"></i> <span class="phone-text">+7 (912) 345-67-89</span></a>
+        <a href="#contact" class="btn btn-outline btn-header">Заказать</a>
+        <button class="mobile-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="badge-accent">Premium Event Host</div>
+        <h1 class="hero-title">Энергия. Стиль.<br><span>Эмоции</span> ваших событий</h1>
+        <p class="hero-subtitle">Превращаю свадьбы, выпускные и коммерческие проекты в легендарные шоу. Создаю душевную атмосферу, объединяю поколения и веду с драйвом.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary">Заказать событие <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="#portfolio" class="btn btn-text">Смотреть портфолио</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="image-box">
+          <div class="image-glow"></div>
+          <img id="hero-img" src="images/host/2026-06-21 17.17.40.jpg" alt="Ведущий Алексей Соколов" class="hero-main-img">
+          
+          <!-- Decorative SVGs for hero -->
+          <svg class="decor-shape shape-1" viewBox="0 0 100 100" width="80" height="80">
+            <polygon points="50,5 95,95 5,95" fill="none" stroke="var(--color-accent)" stroke-width="1" />
+          </svg>
+          <svg class="decor-shape shape-2" viewBox="0 0 100 100" width="100" height="100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--color-primary)" stroke-width="1" stroke-dasharray="5 5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section scroll-reveal">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-image-stack">
+            <div class="about-img-box">
+              <img id="about-img" src="images/host/2026-06-21 17.17.48.jpg" alt="Ведущий в работе" class="about-photo">
+            </div>
+            <div class="about-badge glass">
+              <span class="badge-num" id="stat-experience">8+</span>
+              <span class="badge-text">лет опыта</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-content">
+          <div class="section-tag" id="about-tag">Ведущий, который чувствует аудиторию</div>
+          <h2 class="section-title" id="about-title">Давайте знакомиться!</h2>
+          <div class="about-desc">
+            <p id="about-text1">Привет! Я Алексей Соколов, и за моими плечами более 8 лет успешного проведения самых разных мероприятий: от уютных камерных свадеб до масштабных корпоративов на 1000+ человек.</p>
+            <p id="about-text2">Мой стиль ведения — это сочетание изысканного юмора, современных интерактивных форматов и искренней теплоты. Никаких шаблонных конкурсов или неловких пауз. Ваше событие пройдет динамично, легко и незабываемо.</p>
+          </div>
+          
+          <div class="about-stats">
+            <div class="stat-card glass">
+              <span class="stat-num" id="stat-events">600+</span>
+              <span class="stat-lbl">мероприятий</span>
+            </div>
+            <div class="stat-card glass">
+              <span class="stat-num" id="stat-clients">10 000+</span>
+              <span class="stat-lbl">гостей</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Event Types / Services -->
+  <section id="services" class="services-section scroll-reveal">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-tag">Что я провожу</div>
+        <h2 class="section-title">Форматы Мероприятий</h2>
+        <p class="section-subtitle">Каждое событие уникально. Я разрабатываю эксклюзивные сценарии, адаптированные под ваши вкусы и особенности гостей.</p>
+      </div>
+      
+      <div class="services-grid" id="services-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="portfolio-section scroll-reveal">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-tag">Мои работы</div>
+        <h2 class="section-title">Атмосфера праздника в деталях</h2>
+        <p class="section-subtitle">Фотоотчеты с выпускных, свадеб и масштабных коммерческих презентаций.</p>
+      </div>
+      
+      <!-- Filters -->
+      <div class="portfolio-filters">
+        <button class="filter-btn active" data-filter="all">Все работы</button>
+        <button class="filter-btn" data-filter="weddings">Свадьбы & Юбилеи</button>
+        <button class="filter-btn" data-filter="graduations">Выпускные</button>
+        <button class="filter-btn" data-filter="commercial">Коммерческие</button>
+        <button class="filter-btn" data-filter="host">Я в кадре</button>
+      </div>
+      
+      <!-- Portfolio Grid -->
+      <div class="portfolio-grid" id="portfolio-grid">
+        <!-- Rendered dynamically -->
+      </div>
+      
+      <!-- Big selling button leading to Yandex.Disk -->
+      <div class="portfolio-more-cta text-center">
+        <p class="more-cta-text">Хотите увидеть еще больше живых кадров с различных событий?</p>
+        <a id="yandex-disk-btn" href="https://disk.yandex.ru/d/FDC2oV4wkKiiMw" target="_blank" class="btn btn-outline btn-large">
+          <i class="fa-solid fa-images"></i> Посмотреть все работы на Яндекс.Диске
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section id="contact" class="contact-section scroll-reveal">
+    <div class="container">
+      <div class="contact-card glass">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h2 class="section-title">Давайте создадим<br>что-то <span>невероятное</span> вместе</h2>
+            <p class="contact-lead-text">Оставьте свои данные, и я свяжусь с вами в течение часа, чтобы обсудить дату и концепцию вашего торжества.</p>
+            
+            <div class="contact-methods">
+              <a href="tel:+79123456789" class="contact-method-item phone-target">
+                <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
+                <div>
+                  <span class="method-title">Телефон для связи</span>
+                  <span class="method-value phone-value">+7 (912) 345-67-89</span>
+                </div>
+              </a>
+              
+              <div class="contact-method-item">
+                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                <div>
+                  <span class="method-title">Электронная почта</span>
+                  <span class="method-value">booking@alex-sokolov.ru</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="social-channels">
+              <p class="social-label">Я в социальных сетях:</p>
+              <div class="social-links">
+                <a id="telegram-link" href="#" target="_blank" class="social-btn tg-btn" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a id="instagram-link" href="#" target="_blank" class="social-btn ig-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="contact-form-container">
+            <form id="feedback-form" class="feedback-form">
+              <div class="form-group">
+                <label for="client-name">Ваше имя</label>
+                <input type="text" id="client-name" name="name" placeholder="Иван Иванов" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="client-phone">Номер телефона</label>
+                <input type="tel" id="client-phone" name="phone" placeholder="+7 (999) 123-45-67" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="client-message">Детали события (дата, формат, количество гостей)</label>
+                <textarea id="client-message" name="message" rows="4" placeholder="Например: Выпускной 11 класс, 25 июня, 50 человек..."></textarea>
+              </div>
+              
+              <button type="submit" id="btn-submit-form" class="btn btn-primary btn-block">
+                <span>Отправить заявку</span>
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </form>
+            
+            <!-- Success/Error Toast/Overlays inside form -->
+            <div id="form-success-overlay" class="form-status-overlay">
+              <div class="status-content">
+                <div class="status-icon success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h3>Заявка успешно отправлена!</h3>
+                <p>Спасибо за обращение. Я свяжусь с вами в ближайшее время!</p>
+                <button class="btn btn-outline btn-sm reset-form-btn">Отправить еще раз</button>
+              </div>
+            </div>
+
+            <div id="form-error-overlay" class="form-status-overlay">
+              <div class="status-content">
+                <div class="status-icon error-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <h3>Ошибка отправки</h3>
+                <p id="form-error-message">Что-то пошло не так. Пожалуйста, попробуйте еще раз.</p>
+                <button class="btn btn-outline btn-sm reset-form-btn">Повторить попытку</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-left">
+        <p>&copy; 2026 Алексей Соколов. Все права защищены.</p>
+      </div>
+      <div class="footer-right">
+        <a href="/admin.html" class="admin-entry-link"><i class="fa-solid fa-user-gear"></i> Панель управления</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Gallery Modal -->
+  <div id="lightbox" class="lightbox-modal">
+    <span class="lightbox-close">&times;</span>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous image">&#10094;</button>
+    <button class="lightbox-nav lightbox-next" aria-label="Next image">&#10095;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Детали фото">
+      <div class="lightbox-info">
+        <h4 id="lightbox-title">Название</h4>
+        <p id="lightbox-desc">Описание</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>

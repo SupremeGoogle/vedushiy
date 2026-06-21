@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+.env
+_reference-repo/
+cveti-reference/
+.agents/
+.gemini/
