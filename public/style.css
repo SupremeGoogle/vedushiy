@@ -1406,7 +1406,7 @@ span {
   }
 
   .hero-section {
-    background-image: linear-gradient(90deg, rgba(13, 4, 6, 0.95) 0%, rgba(13, 4, 6, 0.5) 60%, rgba(13, 4, 6, 0.1) 100%), url('images/host/mobile_hero_bg.png');
+    background-image: linear-gradient(90deg, rgba(13, 4, 6, 0.95) 0%, rgba(13, 4, 6, 0.6) 45%, rgba(13, 4, 6, 0) 80%), url('images/host/mobile_hero_bg.png');
     background-size: cover;
     background-position: right center;
     background-repeat: no-repeat;
@@ -1428,7 +1428,7 @@ span {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    max-width: 80%;
+    max-width: 75%;
   }
 
   .hero-subtitle {
