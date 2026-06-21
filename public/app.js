@@ -67,6 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function parseStatString(str) {
+    if (!str) return null;
+    const match = str.trim().match(/^([\d\s+-]+[+±]?)\s+(.*)$/);
+    if (match) {
+      return { num: match[1].trim(), lbl: match[2].trim() };
+    }
+    return { num: str.trim(), lbl: null };
+  }
+
   function renderSiteContent() {
     if (!siteData) return;
 
@@ -129,9 +138,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (aboutTag && siteData.about.subtitle) aboutTag.textContent = siteData.about.subtitle;
       if (aboutText1) aboutText1.textContent = siteData.about.text1;
       if (aboutText2) aboutText2.textContent = siteData.about.text2;
-      if (statExperience && siteData.about.experience) statExperience.textContent = siteData.about.experience;
-      if (statEvents && siteData.about.eventsCount) statEvents.textContent = siteData.about.eventsCount;
-      if (statClients && siteData.about.clientsCount) statClients.textContent = siteData.about.clientsCount;
+      if (statExperience && siteData.about.experience) {
+        const parsed = parseStatString(siteData.about.experience);
+        if (parsed) {
+          statExperience.textContent = parsed.num;
+          const labelEl = statExperience.parentElement.querySelector('.badge-text');
+          if (labelEl && parsed.lbl) labelEl.textContent = parsed.lbl;
+        }
+      }
+      if (statEvents && siteData.about.eventsCount) {
+        const parsed = parseStatString(siteData.about.eventsCount);
+        if (parsed) {
+          statEvents.textContent = parsed.num;
+          const labelEl = statEvents.parentElement.querySelector('.stat-lbl');
+          if (labelEl && parsed.lbl) labelEl.textContent = parsed.lbl;
+        }
+      }
+      if (statClients && siteData.about.clientsCount) {
+        const parsed = parseStatString(siteData.about.clientsCount);
+        if (parsed) {
+          statClients.textContent = parsed.num;
+          const labelEl = statClients.parentElement.querySelector('.stat-lbl');
+          if (labelEl && parsed.lbl) labelEl.textContent = parsed.lbl;
+        }
+      }
       if (aboutImg && siteData.about.image) aboutImg.setAttribute('src', siteData.about.image);
       else if (aboutImg && siteData.gallery && siteData.gallery.length > 0) {
         // Fallback to first host gallery image if about image is not specifically set
