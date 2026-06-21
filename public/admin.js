@@ -561,10 +561,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show loading state
     btnSaveAll.disabled = true;
     const originalText = btnSaveAll.innerHTML;
-    btnSaveAll.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Синхронизация с Git...`;
+    btnSaveAll.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Сохранение...`;
     
     statusIcon.className = 'fa-solid fa-spinner fa-spin status-loading';
-    statusDesc.textContent = 'Сохранение изменений и отправка коммита...';
+    statusDesc.textContent = 'Сохранение изменений...';
 
     // Verify all text changes are synced to siteData
     updateSiteDataState();
@@ -585,7 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        alert('🎉 Все изменения успешно закоммичены в репозиторий и сохранены!');
+        alert('🎉 Изменения успешно сохранены! Они вступят в силу на сайте в течение 1 минуты.');
         pendingImages = []; // Clear queue
         setUnsavedChanges(false);
       } else {
