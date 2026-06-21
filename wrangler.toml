@@ -1,0 +1,6 @@
+name = "telegram-api-proxy"
+main = "proxy-worker.js"
+compatibility_date = "2026-06-21"
+
+# Для быстрого деплоя воркера выполните:
+# npx wrangler deploy
