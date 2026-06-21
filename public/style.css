@@ -1497,20 +1497,20 @@ span {
 /* Wavy scroll indicator */
 .scroll-line-container {
   position: fixed;
-  right: 25px;
+  right: 12px;
   top: 15%;
   height: 70vh;
-  width: 30px;
+  width: 16px;
   z-index: 100;
   pointer-events: none;
   opacity: 0.35;
-  display: none;
   filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.2));
 }
 
-@media (min-width: 992px) {
+@media (min-width: 768px) {
   .scroll-line-container {
-    display: block;
+    right: 25px;
+    width: 30px;
   }
 }
 
@@ -1521,6 +1521,6 @@ span {
 
 #scroll-path {
   stroke-linecap: round;
-  transition: stroke-dashoffset 0.1s ease-out;
+  transition: stroke-dashoffset 0.15s ease-out;
 }
 

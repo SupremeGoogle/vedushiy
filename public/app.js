@@ -424,9 +424,20 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Register document-wide triggers for first user interaction to start play
-    ['click', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
-      document.addEventListener(evt, startAutoplayWithFade, { passive: true });
+    // Try to play immediately (works if browser autoplay permissions are already granted)
+    bgMusic.volume = 0.25;
+    bgMusic.play().then(() => {
+      if (musicWavesEl) {
+        musicWavesEl.classList.add('playing');
+        musicWavesEl.classList.remove('paused');
+      }
+      musicPlaying = true;
+      autoplayInitiated = true;
+    }).catch(() => {
+      // Autoplay blocked by browser policy: register document-wide triggers for first user interaction to play
+      ['click', 'scroll', 'keydown', 'touchstart'].forEach(evt => {
+        document.addEventListener(evt, startAutoplayWithFade, { passive: true });
+      });
     });
   }
 
