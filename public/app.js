@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Document SEO
-    document.title = siteData.title || 'Алексей Соколов';
+    // Document SEO
+    document.title = siteData.title || 'Алиса Вайнштейн';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc && siteData.metaDescription) {
       metaDesc.setAttribute('content', siteData.metaDescription);
@@ -97,6 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (phoneLink) phoneLink.setAttribute('href', `tel:${siteData.phone.replace(/[^+\d]/g, '')}`);
       if (phoneValue) phoneValue.textContent = siteData.phone;
       if (phoneTarget) phoneTarget.setAttribute('href', `tel:${siteData.phone.replace(/[^+\d]/g, '')}`);
+    }
+
+    // Email Contact
+    const emailValue = document.getElementById('email-value');
+    if (emailValue && siteData.email) {
+      emailValue.textContent = siteData.email;
     }
 
     // Social Links
@@ -183,6 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="service-content">
             <h3 class="service-title">${evt.title}</h3>
             <p class="service-desc">${evt.description}</p>
+            <div class="service-price">
+              <i class="fa-solid fa-tags"></i> Цену уточняйте индивидуально
+            </div>
             <a href="#contact" class="service-footer">
               <span>Заказать формат</span> <i class="fa-solid fa-arrow-right"></i>
             </a>

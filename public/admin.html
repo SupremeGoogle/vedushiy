@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Панель управления — Ведущий Алексей Соколов</title>
+  <title>Панель управления — Ведущая Алиса Вайнштейн</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   
   <!-- Google Fonts -->
@@ -26,8 +26,14 @@
     .admin-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 24px 100px 24px;
+      padding: 0 16px 120px 16px;
       display: none; /* Shown after auth */
+    }
+    
+    @media (min-width: 992px) {
+      .admin-container {
+        padding: 0 24px 100px 24px;
+      }
     }
     
     .login-container {
@@ -79,52 +85,79 @@
     .admin-workspace {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 30px;
-      margin-top: 30px;
+      gap: 0;
+      margin-top: 0;
     }
     
     @media (min-width: 992px) {
       .admin-workspace {
         grid-template-columns: 280px 1fr;
+        gap: 30px;
+        margin-top: 30px;
       }
     }
     
     .admin-sidebar {
       display: flex;
       flex-direction: row;
-      flex-wrap: wrap;
-      gap: 10px;
+      flex-wrap: nowrap;
+      gap: 6px;
       height: fit-content;
-      position: static; /* Scroll naturally on mobile */
-      padding: 10px 0;
+      position: sticky;
+      top: 80px;
+      z-index: 100;
+      padding: 12px 0 10px;
+      background: var(--color-bg, #0d0406);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    
+    .admin-sidebar::-webkit-scrollbar {
+      display: none;
     }
     
     @media (min-width: 992px) {
       .admin-sidebar {
         flex-direction: column;
         flex-wrap: nowrap;
+        overflow-x: visible;
         padding: 0;
-        position: sticky; /* Sticky only on desktop */
+        position: sticky;
         top: 100px;
         z-index: 50;
+        background: transparent;
       }
     }
     
     .sidebar-btn {
-      flex: 1 1 140px;
-      padding: 14px 20px;
-      border-radius: 12px;
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 10px;
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--color-border);
       font-family: var(--font-primary);
       font-weight: 600;
+      font-size: 0.8rem;
       color: var(--color-text-muted);
       text-align: left;
       cursor: pointer;
+      white-space: nowrap;
       transition: var(--transition-fast);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
+    }
+    
+    @media (min-width: 992px) {
+      .sidebar-btn {
+        flex: 1 1 auto;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-size: 1rem;
+        gap: 12px;
+        white-space: normal;
+      }
     }
     
     .sidebar-btn:hover, .sidebar-btn.active {
@@ -134,12 +167,14 @@
     }
     
     .admin-content-card {
-      padding: 30px;
+      padding: 24px 20px;
+      margin-top: 16px;
     }
     
     @media (min-width: 768px) {
       .admin-content-card {
         padding: 40px;
+        margin-top: 0;
       }
     }
     
@@ -402,16 +437,25 @@
     /* Sticky Footer */
     .admin-footer {
       position: fixed;
-      bottom: 20px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
-      width: 90%;
+      width: calc(100% - 32px);
       max-width: 1200px;
-      padding: 15px 30px;
+      padding: 10px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 1000;
+      z-index: 500;
+      gap: 10px;
+    }
+    
+    @media (min-width: 992px) {
+      .admin-footer {
+        padding: 15px 30px;
+        bottom: 20px;
+        width: 90%;
+      }
     }
     
     .admin-status-text {
@@ -514,10 +558,16 @@
             </div>
             
             <div class="form-group-admin">
+              <label for="inp-email">Электронная почта (Email)</label>
+              <input type="text" id="inp-email">
+            </div>
+          </div>
+          
+          <div class="form-row form-row-2">
+            <div class="form-group-admin">
               <label for="inp-yandexdisk">Ссылка на портфолио (Яндекс.Диск)</label>
               <input type="text" id="inp-yandexdisk">
             </div>
-          </div>
           
           <div class="form-row form-row-2">
             <div class="form-group-admin">
@@ -557,9 +607,6 @@
             
             <div style="margin-top: 15px;" id="bot-status-container">
               <span id="bot-status-badge" class="admin-badge" style="background: rgba(16, 185, 129, 0.1); border-color: #10b981; color: #10b981;">Проверка подключения...</span>
-              <div class="admins-badges" id="bot-admins-list">
-                <!-- Badges of registered admins -->
-              </div>
             </div>
           </div>
         </section>

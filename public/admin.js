@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inpLogoText = document.getElementById('inp-logotext');
   const inpDescription = document.getElementById('inp-description');
   const inpPhone = document.getElementById('inp-phone');
+  const inpEmail = document.getElementById('inp-email');
   const inpYandexDisk = document.getElementById('inp-yandexdisk');
   const inpTelegram = document.getElementById('inp-telegram');
   const inpInstagram = document.getElementById('inp-instagram');
@@ -69,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Bot indicators
   const botStatusBadge = document.getElementById('bot-status-badge');
-  const botAdminsList = document.getElementById('bot-admins-list');
 
   /* ==========================================================================
      1. AUTHENTICATION FLOW
@@ -173,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     inpLogoText.value = siteData.logoText || '';
     inpDescription.value = siteData.metaDescription || '';
     inpPhone.value = siteData.phone || '';
+    if (inpEmail) inpEmail.value = siteData.email || '';
     inpYandexDisk.value = siteData.yandexDisk || '';
     inpTelegram.value = siteData.telegram || '';
     inpInstagram.value = siteData.instagram || '';
@@ -249,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     siteData.logoText = inpLogoText.value.trim();
     siteData.metaDescription = inpDescription.value.trim();
     siteData.phone = inpPhone.value.trim();
+    if (inpEmail) siteData.email = inpEmail.value.trim();
     siteData.yandexDisk = inpYandexDisk.value.trim();
     siteData.telegram = inpTelegram.value.trim();
     siteData.instagram = inpInstagram.value.trim();
@@ -621,27 +623,13 @@ document.addEventListener('DOMContentLoaded', () => {
         botStatusBadge.style.background = 'rgba(16, 185, 129, 0.1)';
         botStatusBadge.style.color = '#10b981';
         botStatusBadge.style.borderColor = '#10b981';
-        botStatusBadge.innerHTML = `<i class="fa-solid fa-link"></i> Бот активен (Админов: ${status.adminsCount})`;
-        
-        // Render names of active receivers
-        botAdminsList.innerHTML = '';
-        if (status.adminsList && status.adminsList.length > 0) {
-          status.adminsList.forEach(admin => {
-            const badge = document.createElement('span');
-            badge.className = 'admin-badge';
-            badge.textContent = admin;
-            botAdminsList.appendChild(badge);
-          });
-        } else {
-          botAdminsList.innerHTML = `<p style="font-size: 0.8rem; color: #f59e0b; margin-top: 5px;"><i class="fa-solid fa-triangle-exclamation"></i> Получатели не зарегистрированы. Отправьте боту /ved123</p>`;
-        }
+        botStatusBadge.innerHTML = `<i class="fa-solid fa-link"></i> Бот активен`;
       } else {
         botStatusBadge.className = 'admin-badge';
         botStatusBadge.style.background = 'rgba(239, 68, 68, 0.1)';
         botStatusBadge.style.color = '#ef4444';
         botStatusBadge.style.borderColor = '#ef4444';
         botStatusBadge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Токен бота не настроен`;
-        botAdminsList.innerHTML = '';
       }
     } catch (e) {
       console.error('Ошибка проверки статуса бота:', e.message);
