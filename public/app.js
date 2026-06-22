@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Document SEO
-    document.title = siteData.title || 'А. Вайнштейн';
+    document.title = siteData.title || 'Вайнштейн';
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc && siteData.metaDescription) {
       metaDesc.setAttribute('content', siteData.metaDescription);
