@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const CORRECT_PASS = 'ved123';
   let adminPassword = '';
   let siteData = null;
-  let pendingImages = []; // Array of { name: 'relpath.jpg', base64: 'data:...' }
+  let pendingImages = []; // Array of { name: 'relpath.jpg', blob: Blob, uploaded?: { path, sha } }
   let hasChanges = false;
 
   // DOM elements cache
@@ -333,16 +333,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       fileInput.addEventListener('change', (e) => {
-        handleImageFileSelect(e, (base64, filename) => {
+        handleImageFileSelect(e, (previewUrl, filename, blob) => {
           // Add to pending queue and render preview
           const imageRelPath = `events_covers/evt_${idx}_${Date.now()}_${filename}`;
           pendingImages.push({
             name: imageRelPath,
-            base64: base64
+            blob: blob
           });
 
           evt.image = `images/${imageRelPath}`;
-          document.getElementById(`prev-evt-img-${idx}`).setAttribute('src', base64);
+          document.getElementById(`prev-evt-img-${idx}`).setAttribute('src', previewUrl);
           setUnsavedChanges(true);
         });
       });
@@ -407,10 +407,13 @@ document.addEventListener('DOMContentLoaded', () => {
     addPhotoModal.classList.add('active');
   });
 
-  // Modal dialog file picker
+  // Modal dialog file picker (photo is compressed right away, result is kept until "Add")
+  let addPhotoPrepared = null;
   fileAddPhoto.addEventListener('change', (e) => {
-    handleImageFileSelect(e, (base64, filename) => {
-      prevAddPhoto.setAttribute('src', base64);
+    addPhotoPrepared = null;
+    handleImageFileSelect(e, (previewUrl, filename, blob) => {
+      addPhotoPrepared = { filename, blob };
+      prevAddPhoto.setAttribute('src', previewUrl);
       prevAddPhoto.style.display = 'block';
     });
   });
@@ -432,17 +435,21 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const base64 = e.target.result;
-      const filename = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+    if (!addPhotoPrepared) {
+      alert('Фото ещё обрабатывается, подождите секунду и нажмите снова.');
+      return;
+    }
+
+    {
+      const filename = `${Date.now()}_${addPhotoPrepared.filename}`;
       const imageRelPath = `portfolio/${filename}`;
 
       // 1. Pushes upload details to pendingImages queue
       pendingImages.push({
         name: imageRelPath,
-        base64: base64
+        blob: addPhotoPrepared.blob
       });
+      addPhotoPrepared = null;
 
       // 2. Pushes new item to data model
       siteData.gallery.push({
@@ -457,57 +464,139 @@ document.addEventListener('DOMContentLoaded', () => {
       renderGalleryEditor();
       setUnsavedChanges(true);
       addPhotoModal.classList.remove('active');
-    };
-    reader.readAsDataURL(file);
+    }
   });
 
   /* ==========================================================================
      6. IMAGE FILE HANDLING (BASE64 UTILS)
      ========================================================================== */
-  function handleImageFileSelect(e, callback) {
+  // Фото с телефона/камеры (4K, 5–15 МБ) уменьшаем в браузере до разумного для сайта размера:
+  // длинная сторона ≤ 2048px, JPEG ≈ 0.3–0.9 МБ. Пользователю не нужно ничего ужимать вручную.
+  const MAX_IMAGE_SIDE = 2048;
+  const TARGET_IMAGE_BYTES = 900 * 1024;
+
+  function safeFileName(originalName, ext) {
+    const base = originalName.replace(/\.[^.]+$/, '')
+      .replace(/[^A-Za-z0-9_-]+/g, '_')
+      .replace(/^_+|_+$/g, '')
+      .slice(0, 40);
+    return `${base || 'photo'}.${ext}`;
+  }
+
+  function loadImage(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('decode failed')); };
+      img.src = url;
+    });
+  }
+
+  function canvasToBlob(canvas, type, quality) {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('encode failed')), type, quality);
+    });
+  }
+
+  function hasTransparency(ctx, width, height) {
+    const pixels = ctx.getImageData(0, 0, width, height).data;
+    for (let i = 3; i < pixels.length; i += 4 * 7) {
+      if (pixels[i] < 250) return true;
+    }
+    return false;
+  }
+
+  async function prepareImage(file) {
+    const type = (file.type || '').toLowerCase();
+    // Анимацию и векторы не трогаем
+    if (type === 'image/gif' || type === 'image/svg+xml') {
+      return { blob: file, ext: type === 'image/gif' ? 'gif' : 'svg' };
+    }
+
+    let img;
+    try {
+      img = await loadImage(file);
+    } catch (e) {
+      const isHeic = /hei[cf]/.test(type) || /\.hei[cf]$/i.test(file.name);
+      throw new Error(isHeic
+        ? 'Формат HEIC (фото с iPhone) этот браузер не открывает. Сохраните фото как JPG (или в настройках камеры iPhone выберите «Наиболее совместимый») и загрузите снова.'
+        : 'Браузер не смог открыть этот файл как изображение. Сохраните его как JPG или PNG и попробуйте снова.');
+    }
+
+    const scale = Math.min(1, MAX_IMAGE_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
+    const width = Math.max(1, Math.round(img.naturalWidth * scale));
+    const height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, width, height);
+
+    // PNG/WebP с прозрачностью оставляем в PNG, чтобы фон не стал чёрным
+    if ((type === 'image/png' || type === 'image/webp') && hasTransparency(ctx, width, height)) {
+      return { blob: await canvasToBlob(canvas, 'image/png'), ext: 'png' };
+    }
+
+    let blob;
+    for (const quality of [0.85, 0.78, 0.7, 0.6]) {
+      blob = await canvasToBlob(canvas, 'image/jpeg', quality);
+      if (blob.size <= TARGET_IMAGE_BYTES) break;
+    }
+    // Небольшой JPEG без уменьшения — оставляем оригинал, повторное сжатие его только ухудшит
+    if (type === 'image/jpeg' && scale === 1 && file.size <= Math.max(blob.size, TARGET_IMAGE_BYTES)) {
+      return { blob: file, ext: 'jpg' };
+    }
+    return { blob, ext: 'jpg' };
+  }
+
+  async function handleImageFileSelect(e, callback) {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
+    if (!file.type.startsWith('image/') && !/\.hei[cf]$/i.test(file.name)) {
       alert('Файл должен быть изображением!');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      callback(evt.target.result, file.name.replace(/\s+/g, '_'));
-    };
-    reader.readAsDataURL(file);
+    try {
+      const { blob, ext } = await prepareImage(file);
+      callback(URL.createObjectURL(blob), safeFileName(file.name, ext), blob);
+    } catch (err) {
+      alert('❌ ' + err.message);
+      e.target.value = '';
+    }
   }
 
   // Listening to main banner image selection
   fileHeroImage.addEventListener('change', (e) => {
-    handleImageFileSelect(e, (base64, filename) => {
+    handleImageFileSelect(e, (previewUrl, filename, blob) => {
       const imageRelPath = `host/hero_${Date.now()}_${filename}`;
       pendingImages.push({
         name: imageRelPath,
-        base64: base64
+        blob: blob
       });
 
       if (!siteData.hero) siteData.hero = {};
       siteData.hero.image = `images/${imageRelPath}`;
-      prevHeroImage.setAttribute('src', base64);
+      prevHeroImage.setAttribute('src', previewUrl);
       setUnsavedChanges(true);
     });
   });
 
   // Listening to about image selection
   fileAboutImage.addEventListener('change', (e) => {
-    handleImageFileSelect(e, (base64, filename) => {
+    handleImageFileSelect(e, (previewUrl, filename, blob) => {
       const imageRelPath = `host/about_${Date.now()}_${filename}`;
       pendingImages.push({
         name: imageRelPath,
-        base64: base64
+        blob: blob
       });
 
       if (!siteData.about) siteData.about = {};
       siteData.about.image = `images/${imageRelPath}`;
-      prevAboutImage.setAttribute('src', base64);
+      prevAboutImage.setAttribute('src', previewUrl);
       setUnsavedChanges(true);
     });
   });
@@ -527,24 +616,18 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Внимание: Аудиофайл довольно большой (' + (file.size / 1024 / 1024).toFixed(1) + ' МБ). Для более быстрой загрузки сайта рекомендуется использовать сжатые MP3 файлы до 5 МБ.');
       }
 
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const base64 = evt.target.result;
-        const cleanName = file.name.replace(/\s+/g, '_');
-        const audioPath = `public/audio/${Date.now()}_${cleanName}`;
-        
-        pendingImages.push({
-          name: audioPath,
-          base64: base64
-        });
+      const audioPath = `public/audio/${Date.now()}_${safeFileName(file.name, 'mp3')}`;
 
-        const displayPath = audioPath.replace('public/', '');
-        siteData.musicUrl = displayPath;
-        if (inpMusicUrl) inpMusicUrl.value = displayPath;
-        
-        setUnsavedChanges(true);
-      };
-      reader.readAsDataURL(file);
+      pendingImages.push({
+        name: audioPath,
+        blob: file
+      });
+
+      const displayPath = audioPath.replace('public/', '');
+      siteData.musicUrl = displayPath;
+      if (inpMusicUrl) inpMusicUrl.value = displayPath;
+
+      setUnsavedChanges(true);
     });
   }
 
@@ -575,6 +658,34 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSiteDataState();
 
     try {
+      // 1. Файлы — по одному на запрос (раньше все фото шли одним запросом в base64,
+      //    и при сумме больше ~3 МБ хостинг отклонял его целиком)
+      const dataStr = JSON.stringify(siteData);
+      const filesToCommit = pendingImages.filter(item => dataStr.includes(item.name.replace(/^public\//, '')));
+      for (let i = 0; i < filesToCommit.length; i++) {
+        const item = filesToCommit[i];
+        if (item.uploaded) continue; // уже загружен при прошлой (неудачной) попытке сохранения
+
+        statusDesc.textContent = `Загрузка файлов: ${i + 1} из ${filesToCommit.length}...`;
+        const filePath = item.name.startsWith('public/') ? item.name : `public/images/${item.name}`;
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'X-Admin-Password': encodeURIComponent(adminPassword),
+            'X-File-Path': encodeURIComponent(filePath)
+          },
+          body: item.blob
+        });
+        const uploadResult = await readJsonResponse(uploadResponse);
+        if (!uploadResponse.ok || !uploadResult.success) {
+          throw new Error(`файл ${i + 1} из ${filesToCommit.length} (${(item.blob.size / 1024 / 1024).toFixed(1)} МБ) не загрузился: ${uploadResult.error || 'неизвестная ошибка'}`);
+        }
+        item.uploaded = { path: uploadResult.path, sha: uploadResult.sha };
+      }
+
+      // 2. Тексты + список загруженных файлов — одним коммитом
+      statusDesc.textContent = 'Сохранение изменений...';
       const response = await fetch('/api/save-content', {
         method: 'POST',
         headers: {
@@ -583,11 +694,11 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           password: adminPassword,
           data: siteData,
-          images: pendingImages
+          files: filesToCommit.map(item => item.uploaded)
         })
       });
 
-      const result = await response.json();
+      const result = await readJsonResponse(response);
 
       if (response.ok && result.success) {
         alert('🎉 Изменения успешно сохранены! Они вступят в силу на сайте в течение 1 минуты.');
@@ -598,7 +709,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setUnsavedChanges(true);
       }
     } catch (err) {
-      alert('❌ Ошибка связи с API: ' + err.message);
+      alert('❌ Ошибка сохранения: ' + err.message);
       setUnsavedChanges(true);
     } finally {
       btnSaveAll.innerHTML = originalText;
@@ -608,6 +719,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // Сервер может ответить не-JSON (например, 413 от прокси) — показываем понятную ошибку
+  async function readJsonResponse(response) {
+    const text = await response.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      if (response.status === 413) return { success: false, error: 'файл слишком большой для сервера' };
+      return { success: false, error: `сервер ответил ${response.status}: ${text.slice(0, 120)}` };
+    }
+  }
 
   /* ==========================================================================
      8. TELEGRAM BOT STATUS WIDGET

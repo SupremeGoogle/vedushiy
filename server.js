@@ -9,6 +9,7 @@ import feedbackHandler from './api/feedback.js';
 import botStatusHandler from './api/bot-status.js';
 import telegramHandler from './api/telegram.js';
 import saveContentHandler from './api/save-content.js';
+import uploadHandler from './api/upload.js';
 
 dotenv.config();
 
@@ -22,14 +23,15 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Serve static site assets
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static site assets (extensions: /admin -> admin.html, как cleanUrls в vercel.json)
+app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
 // Serverless mapping routes
 app.post('/api/feedback', feedbackHandler);
 app.get('/api/bot-status', botStatusHandler);
 app.post('/api/telegram', telegramHandler);
 app.post('/api/save-content', saveContentHandler);
+app.post('/api/upload', uploadHandler);
 
 // Fallback to index.html for index or single-page navigation
 app.get('*', (req, res) => {
@@ -41,6 +43,7 @@ app.get('*', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+// 0.0.0.0 — обязательно для контейнера (Layero), иначе сервер недоступен снаружи
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`[local-dev] Emulated API and static web server running at http://localhost:${PORT}`);
 });
